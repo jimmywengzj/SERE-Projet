@@ -1,25 +1,14 @@
-globalvar = 3.565685956;
-
-evalstring = '';
-function recfn0(){ return 0;}
-for (i = 0; i < 100; i++) {
-    n = i + 1;
-    evalstring += 'function recfn' + n + '(){ return recfn' + i + '();}';
-}
-eval(evalstring);
-eval(recfn100());
-
-func3("5e8xXmc5");
+func3("testpassword");
 
 function func1(input) {
     str1 = '8aZ{E$+rT yU}1#2(IOP<qs,DFg.)H*Jk~L6M7]W;X%VxB:N!^-03/9[4&5|"?Kz';
     str2 = escape("Z5ZeZ8ZxZXZmZcZ5" + input + "eDer");
     output = "";
-    var a, b, c = "";
-    var _3, _1, _2, _0 = "";
     cnt = 0;
 
     do {
+        var a, b, c = "";
+        var _3, _1, _2, _0 = "";
         a = str2.charCodeAt(cnt++);
         b = str2.charCodeAt(cnt++);
         c = str2.charCodeAt(cnt++);
@@ -33,12 +22,9 @@ function func1(input) {
             _0 = 64;
         }
         output = output + str1.charAt(_3) + str1.charAt(_1) + str1.charAt(_2) + str1.charAt(_0);
-
-        a = b = c = "";
-        _3 = _1 = _2 = _0 = "";
     } while (cnt < str2.length);
 
-    if (func2(output, globalvar) == func2("}8iH5:}Ypi}*VL}", 13) + "^2d2S*,~:JLESF0 ('7p(,5J'<,2prFE/W") {
+    if (func2(output, 3) == func2("}8iH5:}Ypi}*VL}", 13) + "^2d2S*,~:JLESF0 ('7p(,5J'<,2prFE/W") {
         window.location.href = input + ".php";
     } else {
         console.log("MOUHAHAHAHHAHAHAHAHA");
@@ -54,7 +40,6 @@ function func2(input1, input2) { //input2 is 11 and 1101 in binary for these two
             c += String.fromCharCode(input2 ^ input1.charCodeAt(i));
         }
     }
-
     return c;
 }
 
@@ -68,9 +53,6 @@ function func3(input) {
             if (unescape(a[j].substr(3, 3)) == c) {
                 ans += a[j];
             }
-            // if ((a[j] << 2) == "\x00" || (a[j] << 2) == "\xBF") {
-            //     ans += "%5D%12";
-            // }
         }
     }
     if (unescape(ans) == "Z5ZeZ8ZxZXZmZcZ5") {

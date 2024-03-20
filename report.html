@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>report.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="projet-sere">Projet SERE</h1>
+<h4 id="h4224--zijing-weng-yikang-su-remy-etienne-le-tuan-khai-nguyen-mohamed-ali-lajnef">H4224 : Zijing WENG, Yikang SU, Remy ETIENNE, Le Tuan Khai NGUYEN, Mohamed-Ali LAJNEF</h4>
+<h2 id="javascript---obfuscation-5-web-clinet70-points">Javascript - Obfuscation 5 [Web-Clinet][70 Points]</h2>
+<p>The problem can be found here: https://www.root-me.org/fr/Challenges/Web-Client/Javascript-Obfuscation-5</p>
+<h2 id="first-steps">First steps</h2>
+<p>By accessing the challenge page with firefox, we can see a single textbox and a button:<br>
+<img src="img/01.PNG" alt=""></p>
+<p>After changing the text and clicking the button, the page redirect to itself with the query <code>?password=[Text entered]</code><br>
+<img src="img/02.PNG" alt=""></p>
+<p>Using the build-in developper tools of the browser, we can see that there are multiple errors in the page, and several functions are not defined:<br>
+<img src="img/03.PNG" alt=""></p>
+<p>We have to look into the html source code which looks like this:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Obfuscation JS<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+<span class="hljs-comment">&lt;!-- 
+Obfuscation 
+.Niveau : Très Difficile
+.By Hel0ck
+.The mission : 
+	Retrouvez le password :)
+	Vous allez en baver HAHAHAHAHHAHHHAHAHHAHAHAHAHHA :x
+	
+	/!\ ---------------------------------------------------
+	INFO !
+	Pour que le script marche, vous devez d'abord trouver comment décoder le ttt.js 
+	Ce n'est pas trop difficile, faut chercher :D
+	------------------------------------------------------- /!\
+	
+	You need my help ? IRC : irc.root-me.org #root-me
+--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text/javascript"</span>&gt;</span>
+    _ = 'function recfn0()......
+<span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text/javascript"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"ttt.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">'stylesheet'</span> <span class="hljs-attr">property</span>=<span class="hljs-string">'stylesheet'</span> <span class="hljs-attr">id</span>=<span class="hljs-string">'s'</span> <span class="hljs-attr">type</span>=<span class="hljs-string">'text/css'</span> <span class="hljs-attr">href</span>=<span class="hljs-string">'/template/s.css'</span> <span class="hljs-attr">media</span>=<span class="hljs-string">'all'</span> /&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">iframe</span> <span class="hljs-attr">id</span>=<span class="hljs-string">'iframe'</span> <span class="hljs-attr">src</span>=<span class="hljs-string">'https://www.root-me.org/?page=externe_header'</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">iframe</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"login"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"login"</span> <span class="hljs-attr">action</span>=<span class="hljs-string">""</span> <span class="hljs-attr">method</span>=<span class="hljs-string">"get"</span> <span class="hljs-attr">onsubmit</span>=<span class="hljs-string">"checkPass()"</span>&gt;</span>
+		<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"password"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"password"</span>  <span class="hljs-attr">value</span>=<span class="hljs-string">"EditerMoiPass"</span> <span class="hljs-attr">size</span>=<span class="hljs-string">"30"</span> <span class="hljs-attr">maxlength</span>=<span class="hljs-string">"30"</span> /&gt;</span>
+		<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"submit"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"Gooooo"</span>&gt;</span>
+	<span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+
+</div></code></pre>
+<p>We can see that the html is pretty normal, but the script isn't: it is divided into two parts, the first part is very long and obfuscated(omitted here), the second part is in the file <code>ttt.js</code>.<br>
+We also get the hint that we have to first decode <code>ttt.js</code></p>
+<h2 id="decode-tttjs">Decode ttt.js</h2>
+<p>Using the URL <code>http://challenge01.root-me.org/web-client/ch15/ttt.js</code>, we found out that it is indeed encoded into a character string:<br>
+<img src="img/04.PNG" alt=""></p>
+<p>After a lot of research and trial and error, we stumbled upon a encoding method called JScript.Encode :
+https://en.wikipedia.org/wiki/JScript.Encode<br>
+which is reverse engineered :
+http://virtualconspiracy.com/content/articles/breaking-screnc</p>
+<p>We used Malzilla tool (available here https://malzilla.org) to decode the script.<br>
+<img src="img/05.PNG" alt=""></p>
+<p>Now the 2 parts of javascript can be put together. But still, the script is broken : we got errors when we try to execute it</p>
+<h2 id="clean-up">Clean up</h2>
+<p>The script is messed up and we need to beautify the code using https://beautifier.io<br>
+The result:</p>
+<pre class="hljs"><code><div>_ = <span class="hljs-string">'function recfn0(){ return 0;}'</span>;
+___ = <span class="hljs-string">''</span>;
+__ = <span class="hljs-number">0</span>;
+<span class="hljs-built_in">eval</span>(_);
+<span class="hljs-keyword">for</span> (__________ = <span class="hljs-number">0</span>; __________ &lt; <span class="hljs-built_in">parseInt</span>(<span class="hljs-number">100.15786224552145</span>); __________++) {
+    n = __________ + <span class="hljs-number">1</span>;
+    ___ += <span class="hljs-string">'function recfn'</span> + n + <span class="hljs-string">'(){ return recfn'</span> + __________ + <span class="hljs-string">'();}'</span>;
+}
+<span class="hljs-built_in">eval</span>(___);
+<span class="hljs-built_in">eval</span>(recfn100());
+____ = <span class="hljs-keyword">this</span>;
+<span class="hljs-keyword">for</span> (_____ <span class="hljs-keyword">in</span> ____) {
+    <span class="hljs-keyword">if</span> (_____.length == <span class="hljs-built_in">parseInt</span>(<span class="hljs-number">10.125625</span>)) {
+        <span class="hljs-keyword">if</span> (_____.charCodeAt(<span class="hljs-number">0</span>) == <span class="hljs-built_in">Math</span>.min(<span class="hljs-number">115</span>, <span class="hljs-number">12654</span>)) {
+            <span class="hljs-keyword">if</span> (_____.charCodeAt(<span class="hljs-number">9</span>) == <span class="hljs-number">116</span>) <span class="hljs-keyword">break</span>;
+        }
+    }
+}
+<span class="hljs-keyword">var</span> ___________ = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+_________ = ___________[<span class="hljs-string">'getSeconds'</span>]();
+____[_____](<span class="hljs-string">'_____________("'</span> + login.password.value + <span class="hljs-string">'")'</span>, ______________(<span class="hljs-number">2000</span>));
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">______________</span>(<span class="hljs-params">fgseg87857878562</span>) </span>{
+    <span class="hljs-keyword">var</span> fgsog87857878562, fgspg87857878562, fgspg87857878561, fgspg87817878562, d, r, fgspg87817878162;
+    fgsog87857878562 = fgseg87857878562;
+    fgspg87857878562 += fgsog87857878562 &gt;&gt; (fgspg87817878562 - fgsog87857878562);
+    fgspg87857878561 -= fgspg87817878562 + fgsog87857878562 + <span class="hljs-number">1337</span>;
+    fgspg87817878162 = r ^ fgspg87857878561 + fgsog87857878562;
+    <span class="hljs-keyword">return</span> fgsog87857878562;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fgspg87857878561</span>(<span class="hljs-params">fgspd87857878561</span>) </span>{
+    <span class="hljs-keyword">return</span> fgspd87857878561;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_______________1</span>(<span class="hljs-params">PKDFjidfjezif8756265</span>) </span>{
+    ________________ = PKDFjidfjezif8756265;
+    _________________ = <span class="hljs-number">145</span>;
+    <span class="hljs-keyword">if</span> (________________ == <span class="hljs-number">1</span>) {
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>(<span class="hljs-number">1.256</span>);
+    }
+    <span class="hljs-keyword">if</span> (________________ == <span class="hljs-number">2</span>) {
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>(<span class="hljs-number">2.145</span>);
+    }
+    <span class="hljs-keyword">if</span> (________________ == <span class="hljs-number">3</span>) {
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>(<span class="hljs-number">3.145</span>);
+    }
+    <span class="hljs-keyword">if</span> (________________ &gt; <span class="hljs-number">3</span>) {
+        ________________ = _________________ + ________________ - _________________;
+        <span class="hljs-keyword">return</span> ________________;
+    }
+    <span class="hljs-keyword">return</span> ________________;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">___________________</span>(<span class="hljs-params">______________, _______________</span>) </span>{
+    ____________ = <span class="hljs-string">'8aZ{E$+rT yU}1#2(IOP&lt;qs,DFg.)H*Jk~L6M7]W;X%VxB:N!^-03/9[4&amp;5|"?Kz'</span>;
+    _________ = <span class="hljs-built_in">escape</span>(_______________ + ______________ + <span class="hljs-string">"eDer"</span>);
+    output = <span class="hljs-string">""</span>;
+    <span class="hljs-keyword">var</span> qrfqfqfq844568, qrfqfqfq814568, qsfqfqfq814568 = <span class="hljs-string">""</span>;
+    <span class="hljs-keyword">var</span> _3, _1, _2, _0 = <span class="hljs-string">""</span>;
+    ______ = <span class="hljs-number">0</span>;
+    _____________ = ____________;
+    <span class="hljs-keyword">do</span> {
+        qrfqfqfq844568 = _________.charCodeAt(______++);
+        qrfqfqfq814568 = _________.charCodeAt(______++);
+        qsfqfqfq814568 = _________.charCodeAt(______++);
+        _3 = qrfqfqfq844568 &gt;&gt; _______________1(<span class="hljs-number">2</span>);
+        _1 = ((qrfqfqfq844568 &amp; _______________1(<span class="hljs-number">3</span>)) &lt;&lt; <span class="hljs-number">4</span>) | (qrfqfqfq814568 &gt;&gt; _______________1(<span class="hljs-number">4</span>));
+        _2 = ((qrfqfqfq814568 &amp; _______________1(<span class="hljs-number">15</span>)) &lt;&lt; _______________1(<span class="hljs-number">2</span>)) | (qsfqfqfq814568 &gt;&gt; <span class="hljs-number">6</span>);
+        _0 = qsfqfqfq814568 &amp; <span class="hljs-number">63</span>;
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">isNaN</span>(qrfqfqfq814568)) {
+            _2 = _0 = <span class="hljs-number">64</span>;
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-built_in">isNaN</span>(qsfqfqfq814568)) {
+            _0 = <span class="hljs-number">64</span>;
+        }
+        output = output + _____________.charAt(_3) + ____________.charAt(_1) + _____________.charAt(_2) + ____________.charAt(_0);
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">arguments</span>.callee.toString().length != <span class="hljs-number">1731</span>) {
+            output = <span class="hljs-string">"ESF0 ('7p(:5J"</span>;
+        }
+        qrfqfqfq844568 = qrfqfqfq814568 = qsfqfqfq814568 = <span class="hljs-string">""</span>;
+        _3 = _1 = _2 = _0 = <span class="hljs-string">""</span>;
+    } <span class="hljs-keyword">while</span> (______ &lt; _________.length);
+    <span class="hljs-keyword">if</span> (fgspg87857878561235(output, __) == fgspg87857878561235(<span class="hljs-string">"}8iH5:}Ypi}*VL}"</span>, <span class="hljs-number">13</span>) + fgspg87857878561(<span class="hljs-string">"^2d2S*,~"</span>) + <span class="hljs-string">":"</span> + <span class="hljs-built_in">String</span>[<span class="hljs-string">"fr"</span> + <span class="hljs-string">"om"</span> + <span class="hljs-string">"C"</span> + <span class="hljs-string">"harCode"</span>](<span class="hljs-number">74</span>, <span class="hljs-number">76</span>, <span class="hljs-number">69</span>, <span class="hljs-number">83</span>, <span class="hljs-number">70</span>, <span class="hljs-number">48</span>, <span class="hljs-number">32</span>, <span class="hljs-number">40</span>, <span class="hljs-number">39</span>, <span class="hljs-number">55</span>, <span class="hljs-number">112</span>, <span class="hljs-number">40</span>, <span class="hljs-number">44</span>, <span class="hljs-number">53</span>, <span class="hljs-number">74</span>, <span class="hljs-number">39</span>, <span class="hljs-number">60</span>, <span class="hljs-number">44</span>, <span class="hljs-number">50</span>, <span class="hljs-number">112</span>, <span class="hljs-number">114</span>, <span class="hljs-number">70</span>, <span class="hljs-number">69</span>, <span class="hljs-number">47</span>, <span class="hljs-number">87</span>)) {
+        <span class="hljs-built_in">window</span>.location.href = ______________ + <span class="hljs-string">".php"</span>;
+    } <span class="hljs-keyword">else</span> {
+        alert(<span class="hljs-string">"MOUHAHAHAHHAHAHAHAHA"</span>);
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fgspg87857878561235</span>(<span class="hljs-params">q45qsdfus8465dfsfgth, __</span>) </span>{
+    q45qsdfzf8465dfsfgth = <span class="hljs-string">""</span>;
+    q45qsdfzf8465dfsfguh = <span class="hljs-string">""</span>;
+    _______________ = <span class="hljs-number">0000000000</span>;
+    <span class="hljs-keyword">for</span> (_______________; _______________ &lt; <span class="hljs-number">13</span> - <span class="hljs-number">2</span>; _______________++) {
+        q45qsdfzf8465dfsfgth = q45qsdfus8465dfsfgth.length ^ __;
+        <span class="hljs-keyword">if</span> (q45qsdfzf8465dfsfgth != <span class="hljs-string">""</span>) q45qsdfzf8465dfsfgth = <span class="hljs-string">""</span>;
+    }
+    q45qsdfzs8465dfsfgth = q45qsdfzf8465dfsfgth;
+    q45qsdfzf8465dfsfguh = q45qsdfzs8465dfsfgth;
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; q45qsdfus8465dfsfgth.length; i++) {
+        <span class="hljs-keyword">if</span> (q45qsdfzs8465dfsfgth == <span class="hljs-string">"ESF0 ('7p(,5J')"</span>) {
+            q45qsdfzs8465dfsfgth += <span class="hljs-built_in">String</span>[<span class="hljs-built_in">unescape</span>(<span class="hljs-string">"66%72%6f%6d%43%68%61%72%43%6f%64%65"</span>)](__ ^ q45qsdfus8465dfsfgth.charCodeAt(i) + <span class="hljs-number">12</span>);
+        } <span class="hljs-keyword">else</span> {
+            q45qsdfzs8465dfsfgth += <span class="hljs-built_in">String</span>.fromCharCode(__ ^ q45qsdfus8465dfsfgth.charCodeAt(i));
+        }
+    }
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">arguments</span>.callee.toString().length != <span class="hljs-number">1169</span>) {
+        q45qsdfzs8465dfsfgth = <span class="hljs-string">"ESF0 ('7p(:5J"</span>;
+    }
+    <span class="hljs-keyword">if</span> (q45qsdfzf8465dfsfguh == <span class="hljs-string">"sfeze5825qsde8rfq--"</span>) {
+        <span class="hljs-keyword">for</span> (______ = <span class="hljs-number">0</span>; ______ &gt; <span class="hljs-number">-1</span>; ______++) {
+            q45qsdfzf8465dfsfguh = <span class="hljs-string">"\x6e\x6f\x6f\x62\x20\x6e\x6f\x6f\x62"</span>;
+        }
+    }
+    <span class="hljs-keyword">return</span> q45qsdfzs8465dfsfgth;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">____________________________8</span>(<span class="hljs-params">_______________</span>) </span>{
+    ________________ = <span class="hljs-string">'37.13R53.14R65.78R37.45R51.14R53.75R90.125R101.2365R37.145R53.789R65.123R37.745R51.258R56.348R90.368R120.125R37.785R53.78R65.1R88.842R37.11R53.785R65.78R37.82R54.46R68.13R90.82R99.193R37.73R53.769R65.71R53.46'</span>;
+    _________________ = ________________.split(<span class="hljs-string">'R'</span>);
+    __________________ = <span class="hljs-string">''</span>;
+    <span class="hljs-keyword">for</span> (n = <span class="hljs-number">0</span>; n &lt; _________________.length; n++) {
+        __________________ += <span class="hljs-built_in">String</span>[<span class="hljs-string">"f"</span> + <span class="hljs-string">"r"</span> + <span class="hljs-string">"o"</span> + <span class="hljs-string">"m"</span> + <span class="hljs-string">"C"</span> + <span class="hljs-string">"har"</span> + <span class="hljs-string">"Code"</span>](<span class="hljs-built_in">parseInt</span>(_________________[n]));
+    }
+    ____________________ = __________________;
+    rfqer4845dfszzefsd87 = <span class="hljs-built_in">Array</span>(<span class="hljs-string">'%5A%58'</span>, <span class="hljs-string">'%5A%65'</span>, <span class="hljs-string">'%5A%32'</span>, <span class="hljs-string">'%5A%35'</span>, <span class="hljs-string">'%5A%72'</span>, <span class="hljs-string">'%5A%6C'</span>, <span class="hljs-string">'%5A%73'</span>, <span class="hljs-string">'%5A%76'</span>, <span class="hljs-string">'%5A%69'</span>, <span class="hljs-string">'%5A%70'</span>, <span class="hljs-string">'%5A%38'</span>, <span class="hljs-string">'%5A%77'</span>, <span class="hljs-string">'%5A%66'</span>, <span class="hljs-string">'%5A%70'</span>, <span class="hljs-string">'%5A%78'</span>, <span class="hljs-string">'%5A%6D'</span>, <span class="hljs-string">'%5A%63'</span>);
+    rfqer4845dfsssefsd87 = <span class="hljs-number">0</span>;
+    rfqer4845dfrzzefsd87 = <span class="hljs-built_in">String</span>();
+    ____________ = <span class="hljs-string">''</span>;
+    <span class="hljs-keyword">for</span> (rfqer4845dfsssefsd87 = <span class="hljs-built_in">Math</span>.min(<span class="hljs-number">0</span>, _______________1(<span class="hljs-number">135.125</span>)); rfqer4845dfsssefsd87 &lt; _______________.length; rfqer4845dfsssefsd87++) {
+        ____________ = _______________.substr(rfqer4845dfsssefsd87, fgesrgesrt855456989(<span class="hljs-number">1</span>));
+        <span class="hljs-keyword">for</span> (j = <span class="hljs-number">0</span>; j &lt; rfqer4845dfszzefsd87.length; j++) {
+            <span class="hljs-keyword">if</span> (<span class="hljs-built_in">unescape</span>(rfqer4845dfszzefsd87[j].substr(<span class="hljs-number">3</span>, <span class="hljs-number">3</span>)) == ____________) {
+                rfqer4845dfrzzefsd87 += rfqer4845dfszzefsd87[j];
+            }
+            <span class="hljs-keyword">if</span> ((rfqer4845dfszzefsd87[j] &lt;&lt; <span class="hljs-number">2</span>) == <span class="hljs-string">"\x00"</span> || (rfqer4845dfszzefsd87[j] &lt;&lt; <span class="hljs-number">2</span>) == <span class="hljs-string">"\xBF"</span>) {
+                rfqer4845dfrzzefsd87 += <span class="hljs-string">"%5D%12"</span>;
+            }
+        }
+    }
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">unescape</span>(rfqer4845dfrzzefsd87) == <span class="hljs-built_in">unescape</span>(____________________)) {
+        ___________________(_______________, <span class="hljs-built_in">unescape</span>(rfqer4845dfrzzefsd87));
+    } <span class="hljs-keyword">else</span> {
+        alert(<span class="hljs-string">'fo'</span>);
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">____________</span>(<span class="hljs-params">aaaa</span>) </span>{
+    _______ = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+    ________ = _______[<span class="hljs-string">'getSeconds'</span>]();
+    ______ = ________ - _________;
+    <span class="hljs-keyword">if</span> ((______ &lt; <span class="hljs-number">0</span>) &amp;&amp; (______ == <span class="hljs-number">2</span>)) ______ = <span class="hljs-number">2</span>;
+    <span class="hljs-keyword">if</span> ((______ &gt; <span class="hljs-number">1</span>) &amp;&amp; (______ == <span class="hljs-number">2</span>)) ______ = <span class="hljs-number">2</span>;
+    <span class="hljs-keyword">if</span> ((______ &gt; <span class="hljs-number">1</span>) &amp;&amp; (______ != <span class="hljs-number">2</span>)) ______ = <span class="hljs-number">3</span>;
+    <span class="hljs-keyword">if</span> ((______ &lt; <span class="hljs-number">0</span>) &amp;&amp; (______ != <span class="hljs-number">2</span>)) ______ = <span class="hljs-number">3</span>;
+    __ = <span class="hljs-number">1.565685956</span> + ______;
+    ____________________________8(aaaa);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_____________</span>(<span class="hljs-params">aaaa</span>) </span>{
+    <span class="hljs-keyword">return</span> ____________(aaaa);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fgesrgesrt855456989</span>(<span class="hljs-params">________________</span>) </span>{
+    <span class="hljs-keyword">return</span> ________________;
+}
+</div></code></pre>
+<p>We tried online deobfuscaters but they didn't do a lot. So we have to do it by hand: Rename function and variable names, simplify constant functions like <code>parseInt(constant)</code>, remove several useless functions, such as those who only returns the input, or those who are never called. There are also a lot of if conditions that won't trigger, and variables that are not used. After all this, the code is readable:</p>
+<pre class="hljs"><code><div>globalvar = <span class="hljs-number">0</span>;
+
+evalstring = <span class="hljs-string">''</span>;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">recfn0</span>(<span class="hljs-params"></span>)</span>{ <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;}
+<span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100</span>; i++) {
+    n = i + <span class="hljs-number">1</span>;
+    evalstring += <span class="hljs-string">'function recfn'</span> + n + <span class="hljs-string">'(){ return recfn'</span> + i + <span class="hljs-string">'();}'</span>;
+}
+<span class="hljs-built_in">eval</span>(evalstring);
+<span class="hljs-built_in">eval</span>(recfn100());
+
+<span class="hljs-keyword">for</span> (obj <span class="hljs-keyword">in</span> <span class="hljs-keyword">this</span>) {
+    <span class="hljs-keyword">if</span> (obj.length == <span class="hljs-number">10</span>) {
+        <span class="hljs-keyword">if</span> (obj.charCodeAt(<span class="hljs-number">0</span>) == <span class="hljs-number">115</span>) {
+            <span class="hljs-keyword">if</span> (obj.charCodeAt(<span class="hljs-number">9</span>) == <span class="hljs-number">116</span>) <span class="hljs-keyword">break</span>;
+        }
+    }
+}
+<span class="hljs-keyword">var</span> date1 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+seconds1 = date1[<span class="hljs-string">'getSeconds'</span>]();
+<span class="hljs-keyword">this</span>[obj](<span class="hljs-string">'func4("'</span> + login.password.value + <span class="hljs-string">'")'</span>, <span class="hljs-number">2000</span>);
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">func1</span>(<span class="hljs-params">input1, input2</span>) </span>{
+    str1 = <span class="hljs-string">'8aZ{E$+rT yU}1#2(IOP&lt;qs,DFg.)H*Jk~L6M7]W;X%VxB:N!^-03/9[4&amp;5|"?Kz'</span>;
+    str2 = <span class="hljs-built_in">escape</span>(input2 + input1 + <span class="hljs-string">"eDer"</span>);
+    output = <span class="hljs-string">""</span>;
+    <span class="hljs-keyword">var</span> a, b, c = <span class="hljs-string">""</span>;
+    <span class="hljs-keyword">var</span> _3, _1, _2, _0 = <span class="hljs-string">""</span>;
+    cnt = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">do</span> {
+        a = str2.charCodeAt(cnt++);
+        b = str2.charCodeAt(cnt++);
+        c = str2.charCodeAt(cnt++);
+        _3 = a &gt;&gt; <span class="hljs-number">2</span>;
+        _1 = ((a &amp; <span class="hljs-number">3</span>) &lt;&lt; <span class="hljs-number">4</span>) | (b &gt;&gt; <span class="hljs-number">4</span>);
+        _2 = ((b &amp; <span class="hljs-number">15</span>) &lt;&lt; <span class="hljs-number">2</span>) | (c &gt;&gt; <span class="hljs-number">6</span>);
+        _0 = c &amp; <span class="hljs-number">63</span>;
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">isNaN</span>(b)) {
+            _2 = _0 = <span class="hljs-number">64</span>;
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-built_in">isNaN</span>(c)) {
+            _0 = <span class="hljs-number">64</span>;
+        }
+        output = output + str1.charAt(_3) + str1.charAt(_1) + str1.charAt(_2) + str1.charAt(_0);
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">arguments</span>.callee.toString().length != <span class="hljs-number">1731</span>) {
+            output = <span class="hljs-string">"ESF0 ('7p(:5J"</span>;
+        }
+        a = b = c = <span class="hljs-string">""</span>;
+        _3 = _1 = _2 = _0 = <span class="hljs-string">""</span>;
+    } <span class="hljs-keyword">while</span> (cnt &lt; str2.length);
+    <span class="hljs-keyword">if</span> (func2(output, globalvar) == func2(<span class="hljs-string">"}8iH5:}Ypi}*VL}"</span>, <span class="hljs-number">13</span>) + <span class="hljs-string">"^2d2S*,~"</span> + <span class="hljs-string">":"</span> + <span class="hljs-built_in">String</span>[<span class="hljs-string">"fr"</span> + <span class="hljs-string">"om"</span> + <span class="hljs-string">"C"</span> + <span class="hljs-string">"harCode"</span>](<span class="hljs-number">74</span>, <span class="hljs-number">76</span>, <span class="hljs-number">69</span>, <span class="hljs-number">83</span>, <span class="hljs-number">70</span>, <span class="hljs-number">48</span>, <span class="hljs-number">32</span>, <span class="hljs-number">40</span>, <span class="hljs-number">39</span>, <span class="hljs-number">55</span>, <span class="hljs-number">112</span>, <span class="hljs-number">40</span>, <span class="hljs-number">44</span>, <span class="hljs-number">53</span>, <span class="hljs-number">74</span>, <span class="hljs-number">39</span>, <span class="hljs-number">60</span>, <span class="hljs-number">44</span>, <span class="hljs-number">50</span>, <span class="hljs-number">112</span>, <span class="hljs-number">114</span>, <span class="hljs-number">70</span>, <span class="hljs-number">69</span>, <span class="hljs-number">47</span>, <span class="hljs-number">87</span>)) {
+        <span class="hljs-built_in">window</span>.location.href = input1 + <span class="hljs-string">".php"</span>;
+    } <span class="hljs-keyword">else</span> {
+        alert(<span class="hljs-string">"MOUHAHAHAHHAHAHAHAHA"</span>);
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">func2</span>(<span class="hljs-params">input1, input2</span>) </span>{
+    a = <span class="hljs-string">""</span>;
+    b = <span class="hljs-string">""</span>;
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">11</span>; i++) {
+        a = input1.length ^ input2;
+        <span class="hljs-keyword">if</span> (a != <span class="hljs-string">""</span>) a = <span class="hljs-string">""</span>;
+    }
+    c = a;
+    b = c;
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; input1.length; i++) {
+        <span class="hljs-keyword">if</span> (c == <span class="hljs-string">"ESF0 ('7p(,5J')"</span>) {
+            c += <span class="hljs-built_in">String</span>[<span class="hljs-built_in">unescape</span>(<span class="hljs-string">"66%72%6f%6d%43%68%61%72%43%6f%64%65"</span>)](input2 ^ input1.charCodeAt(i) + <span class="hljs-number">12</span>);
+        } <span class="hljs-keyword">else</span> {
+            c += <span class="hljs-built_in">String</span>.fromCharCode(input2 ^ input1.charCodeAt(i));
+        }
+    }
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">arguments</span>.callee.toString().length != <span class="hljs-number">1169</span>) {
+        c = <span class="hljs-string">"ESF0 ('7p(:5J"</span>;
+    }
+    <span class="hljs-keyword">if</span> (b == <span class="hljs-string">"sfeze5825qsde8rfq--"</span>) {
+        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &gt; <span class="hljs-number">-1</span>; i++) {
+            b = <span class="hljs-string">"\x6e\x6f\x6f\x62\x20\x6e\x6f\x6f\x62"</span>;
+        }
+    }
+    <span class="hljs-keyword">return</span> c;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">func3</span>(<span class="hljs-params">input</span>) </span>{
+    str1 = <span class="hljs-string">'37.13R53.14R65.78R37.45R51.14R53.75R90.125R101.2365R37.145R53.789R65.123R37.745R51.258R56.348R90.368R120.125R37.785R53.78R65.1R88.842R37.11R53.785R65.78R37.82R54.46R68.13R90.82R99.193R37.73R53.769R65.71R53.46'</span>;
+    splited = str1.split(<span class="hljs-string">'R'</span>);
+    str2 = <span class="hljs-string">''</span>;
+    <span class="hljs-keyword">for</span> (n = <span class="hljs-number">0</span>; n &lt; splited.length; n++) {
+        str2 += <span class="hljs-built_in">String</span>[<span class="hljs-string">"f"</span> + <span class="hljs-string">"r"</span> + <span class="hljs-string">"o"</span> + <span class="hljs-string">"m"</span> + <span class="hljs-string">"C"</span> + <span class="hljs-string">"har"</span> + <span class="hljs-string">"Code"</span>](<span class="hljs-built_in">parseInt</span>(splited[n]));
+    }
+    a = <span class="hljs-built_in">Array</span>(<span class="hljs-string">'%5A%58'</span>, <span class="hljs-string">'%5A%65'</span>, <span class="hljs-string">'%5A%32'</span>, <span class="hljs-string">'%5A%35'</span>, <span class="hljs-string">'%5A%72'</span>, <span class="hljs-string">'%5A%6C'</span>, <span class="hljs-string">'%5A%73'</span>, <span class="hljs-string">'%5A%76'</span>, <span class="hljs-string">'%5A%69'</span>, <span class="hljs-string">'%5A%70'</span>, <span class="hljs-string">'%5A%38'</span>, <span class="hljs-string">'%5A%77'</span>, <span class="hljs-string">'%5A%66'</span>, <span class="hljs-string">'%5A%70'</span>, <span class="hljs-string">'%5A%78'</span>, <span class="hljs-string">'%5A%6D'</span>, <span class="hljs-string">'%5A%63'</span>);
+    str3 = <span class="hljs-built_in">String</span>();
+    str4 = <span class="hljs-string">''</span>;
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; input.length; i++) {
+        str4 = input.substr(i, <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">for</span> (j = <span class="hljs-number">0</span>; j &lt; a.length; j++) {
+            <span class="hljs-keyword">if</span> (<span class="hljs-built_in">unescape</span>(a[j].substr(<span class="hljs-number">3</span>, <span class="hljs-number">3</span>)) == str4) {
+                str3 += a[j];
+            }
+            <span class="hljs-keyword">if</span> ((a[j] &lt;&lt; <span class="hljs-number">2</span>) == <span class="hljs-string">"\x00"</span> || (a[j] &lt;&lt; <span class="hljs-number">2</span>) == <span class="hljs-string">"\xBF"</span>) {
+                str3 += <span class="hljs-string">"%5D%12"</span>;
+            }
+        }
+    }
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">unescape</span>(str3) == <span class="hljs-built_in">unescape</span>(str2)) {
+        func1(input, <span class="hljs-built_in">unescape</span>(str3));
+    } <span class="hljs-keyword">else</span> {
+        alert(<span class="hljs-string">'fo'</span>);
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">func4</span>(<span class="hljs-params">aaaa</span>) </span>{
+    date2 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+    seconds2 = date2[<span class="hljs-string">'getSeconds'</span>]();
+    delta = seconds2 - seconds1;
+    <span class="hljs-keyword">if</span> (delta &gt; <span class="hljs-number">2</span>) delta = <span class="hljs-number">3</span>;
+    <span class="hljs-keyword">if</span> (delta &lt; <span class="hljs-number">0</span>) delta = <span class="hljs-number">3</span>;
+    globalvar = <span class="hljs-number">1.565685956</span> + delta;
+    func3(aaaa);
+}
+</div></code></pre>
+<h2 id="dissect-the-code">Dissect the code</h2>
+<p>The easy part is done, now we have to read and understand the code to progress.</p>
+<h3 id="some-return-functions">Some return functions</h3>
+<pre class="hljs"><code><div>evalstring = <span class="hljs-string">''</span>;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">recfn0</span>(<span class="hljs-params"></span>)</span>{ <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;}
+<span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100</span>; i++) {
+    n = i + <span class="hljs-number">1</span>;
+    evalstring += <span class="hljs-string">'function recfn'</span> + n + <span class="hljs-string">'(){ return recfn'</span> + i + <span class="hljs-string">'();}'</span>;
+}
+<span class="hljs-built_in">eval</span>(evalstring);
+<span class="hljs-built_in">eval</span>(recfn100());
+</div></code></pre>
+<p>This part of code creates 100 functions that returns 0. However, these functions are never called so we can safely delete those.</p>
+<h3 id="a-object-in-this">A object in this</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">for</span> (obj <span class="hljs-keyword">in</span> <span class="hljs-keyword">this</span>) {
+    <span class="hljs-keyword">if</span> (obj.length == <span class="hljs-number">10</span>) {
+        <span class="hljs-keyword">if</span> (obj.charCodeAt(<span class="hljs-number">0</span>) == <span class="hljs-number">115</span>) {
+            <span class="hljs-keyword">if</span> (obj.charCodeAt(<span class="hljs-number">9</span>) == <span class="hljs-number">116</span>) <span class="hljs-keyword">break</span>;
+        }
+    }
+}
+<span class="hljs-keyword">var</span> date1 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+seconds1 = date1[<span class="hljs-string">'getSeconds'</span>]();
+<span class="hljs-keyword">this</span>[obj](<span class="hljs-string">'func4("'</span> + login.password.value + <span class="hljs-string">'")'</span>, <span class="hljs-number">2000</span>);
+</div></code></pre>
+<p>This part finds a object of <code>this</code> (window) and called it. By running this part of the script on firefox, we found out it is the <code>setTimeout</code> object. It means that <code>func4(login.password.value)</code> will be executed 2 seconds after the page is loaded. Even though <code>login</code> is not well defined in the html, we guess that <code>login.password.value</code> should be the text we put in the textbox.</p>
+<h3 id="func4">func4</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">func4</span>(<span class="hljs-params">aaaa</span>) </span>{
+    date2 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+    seconds2 = date2[<span class="hljs-string">'getSeconds'</span>]();
+    delta = seconds2 - seconds1;
+    <span class="hljs-keyword">if</span> (delta &gt; <span class="hljs-number">2</span>) delta = <span class="hljs-number">3</span>;
+    <span class="hljs-keyword">if</span> (delta &lt; <span class="hljs-number">0</span>) delta = <span class="hljs-number">3</span>;
+    globalvar = <span class="hljs-number">1.565685956</span> + delta;
+    func3(aaaa);
+}
+</div></code></pre>
+<p>All <code>func4</code> does is to calculate <code>globalvar</code> and call <code>func3</code>. Delta is always 2 (2 seconds of waiting time) and the globalvar is constant.</p>
+<h3 id="func3">func3</h3>
+<pre class="hljs"><code><div>str1 = <span class="hljs-string">'37.13R53.14R65.78R37.45R51.14R53.75R90.125R101.2365R37.145R53.789R65.123R37.745R51.258R56.348R90.368R120.125R37.785R53.78R65.1R88.842R37.11R53.785R65.78R37.82R54.46R68.13R90.82R99.193R37.73R53.769R65.71R53.46'</span>;
+splited = str1.split(<span class="hljs-string">'R'</span>);
+str2 = <span class="hljs-string">''</span>;
+<span class="hljs-keyword">for</span> (n = <span class="hljs-number">0</span>; n &lt; splited.length; n++) {
+    str2 += <span class="hljs-built_in">String</span>[<span class="hljs-string">"f"</span> + <span class="hljs-string">"r"</span> + <span class="hljs-string">"o"</span> + <span class="hljs-string">"m"</span> + <span class="hljs-string">"C"</span> + <span class="hljs-string">"har"</span> + <span class="hljs-string">"Code"</span>](<span class="hljs-built_in">parseInt</span>(splited[n]));
+}
+a = <span class="hljs-built_in">Array</span>(<span class="hljs-string">'%5A%58'</span>, <span class="hljs-string">'%5A%65'</span>, <span class="hljs-string">'%5A%32'</span>, <span class="hljs-string">'%5A%35'</span>, <span class="hljs-string">'%5A%72'</span>, <span class="hljs-string">'%5A%6C'</span>, <span class="hljs-string">'%5A%73'</span>, <span class="hljs-string">'%5A%76'</span>, <span class="hljs-string">'%5A%69'</span>, <span class="hljs-string">'%5A%70'</span>, <span class="hljs-string">'%5A%38'</span>, <span class="hljs-string">'%5A%77'</span>, <span class="hljs-string">'%5A%66'</span>, <span class="hljs-string">'%5A%70'</span>, <span class="hljs-string">'%5A%78'</span>, <span class="hljs-string">'%5A%6D'</span>, <span class="hljs-string">'%5A%63'</span>);
+str3 = <span class="hljs-built_in">String</span>();
+str4 = <span class="hljs-string">''</span>;
+</div></code></pre>
+<p>This first part of <code>func3</code> is constant and can be calculated. <code>array a = {ZX,Ze,Z2,Z5,Zr,Zl,Zs,Zv,Zi,Zp,Z8,Zw,Zf,Zp,Zx,Zm,Zc}</code> if unescaped. The reset of <code>func3</code>:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; input.length; i++) {
+    str4 = input.substr(i, <span class="hljs-number">1</span>);
+    <span class="hljs-keyword">for</span> (j = <span class="hljs-number">0</span>; j &lt; a.length; j++) {
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">unescape</span>(a[j].substr(<span class="hljs-number">3</span>, <span class="hljs-number">3</span>)) == str4) {
+            str3 += a[j];
+        }
+        <span class="hljs-keyword">if</span> ((a[j] &lt;&lt; <span class="hljs-number">2</span>) == <span class="hljs-string">"\x00"</span> || (a[j] &lt;&lt; <span class="hljs-number">2</span>) == <span class="hljs-string">"\xBF"</span>) {
+            str3 += <span class="hljs-string">"%5D%12"</span>;
+        }
+    }
+}
+<span class="hljs-keyword">if</span> (<span class="hljs-built_in">unescape</span>(str3) == <span class="hljs-built_in">unescape</span>(str2)) {
+    func1(input, <span class="hljs-built_in">unescape</span>(str3));
+} <span class="hljs-keyword">else</span> {
+    alert(<span class="hljs-string">'fo'</span>);
+}
+</div></code></pre>
+<p>After further inspection, we found out <code>func3</code> is a check for the password: we iterate through all the character of the password, if it is one of the second character of array a, we put <code>'Z'+(the character)</code> to a output string. Then it checks if the output string equals to <code>&quot;Z5ZeZ8ZxZXZmZcZ5&quot;</code>, and if not, the script ends with a single alert.<br>
+We can deduce that for the password to pass this test, it has to have a non-continuous sub string <code>&quot;5e8xXmc5&quot;</code>, and the rest of the password contains no following characters <code>258Xcefilmprsvwx</code> (in ASCII order)</p>
+<h3 id="func1">func1</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">func1</span>(<span class="hljs-params">input1, input2</span>) </span>{
+    str1 = <span class="hljs-string">'8aZ{E$+rT yU}1#2(IOP&lt;qs,DFg.)H*Jk~L6M7]W;X%VxB:N!^-03/9[4&amp;5|"?Kz'</span>;
+    str2 = <span class="hljs-built_in">escape</span>(input2 + input1 + <span class="hljs-string">"eDer"</span>);
+    output = <span class="hljs-string">""</span>;
+    <span class="hljs-keyword">var</span> a, b, c = <span class="hljs-string">""</span>;
+    <span class="hljs-keyword">var</span> _3, _1, _2, _0 = <span class="hljs-string">""</span>;
+    cnt = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">do</span> {
+        a = str2.charCodeAt(cnt++);
+        b = str2.charCodeAt(cnt++);
+        c = str2.charCodeAt(cnt++);
+        _3 = a &gt;&gt; <span class="hljs-number">2</span>;
+        _1 = ((a &amp; <span class="hljs-number">3</span>) &lt;&lt; <span class="hljs-number">4</span>) | (b &gt;&gt; <span class="hljs-number">4</span>);
+        _2 = ((b &amp; <span class="hljs-number">15</span>) &lt;&lt; <span class="hljs-number">2</span>) | (c &gt;&gt; <span class="hljs-number">6</span>);
+        _0 = c &amp; <span class="hljs-number">63</span>;
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">isNaN</span>(b)) {
+            _2 = _0 = <span class="hljs-number">64</span>;
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-built_in">isNaN</span>(c)) {
+            _0 = <span class="hljs-number">64</span>;
+        }
+        output = output + str1.charAt(_3) + str1.charAt(_1) + str1.charAt(_2) + str1.charAt(_0);
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">arguments</span>.callee.toString().length != <span class="hljs-number">1731</span>) {
+            output = <span class="hljs-string">"ESF0 ('7p(:5J"</span>;
+        }
+        a = b = c = <span class="hljs-string">""</span>;
+        _3 = _1 = _2 = _0 = <span class="hljs-string">""</span>;
+    } <span class="hljs-keyword">while</span> (cnt &lt; str2.length);
+    <span class="hljs-keyword">if</span> (func2(output, globalvar) == func2(<span class="hljs-string">"}8iH5:}Ypi}*VL}"</span>, <span class="hljs-number">13</span>) + <span class="hljs-string">"^2d2S*,~"</span> + <span class="hljs-string">":"</span> + <span class="hljs-built_in">String</span>[<span class="hljs-string">"fr"</span> + <span class="hljs-string">"om"</span> + <span class="hljs-string">"C"</span> + <span class="hljs-string">"harCode"</span>](<span class="hljs-number">74</span>, <span class="hljs-number">76</span>, <span class="hljs-number">69</span>, <span class="hljs-number">83</span>, <span class="hljs-number">70</span>, <span class="hljs-number">48</span>, <span class="hljs-number">32</span>, <span class="hljs-number">40</span>, <span class="hljs-number">39</span>, <span class="hljs-number">55</span>, <span class="hljs-number">112</span>, <span class="hljs-number">40</span>, <span class="hljs-number">44</span>, <span class="hljs-number">53</span>, <span class="hljs-number">74</span>, <span class="hljs-number">39</span>, <span class="hljs-number">60</span>, <span class="hljs-number">44</span>, <span class="hljs-number">50</span>, <span class="hljs-number">112</span>, <span class="hljs-number">114</span>, <span class="hljs-number">70</span>, <span class="hljs-number">69</span>, <span class="hljs-number">47</span>, <span class="hljs-number">87</span>)) {
+        <span class="hljs-built_in">window</span>.location.href = input1 + <span class="hljs-string">".php"</span>;
+    } <span class="hljs-keyword">else</span> {
+        alert(<span class="hljs-string">"MOUHAHAHAHHAHAHAHAHA"</span>);
+    }
+}
+</div></code></pre>
+<p>At the end of <code>func3</code>, <code>func1</code> is called with the first argument the entered password and the second argument the constant string <code>&quot;Z5ZeZ8ZxZXZmZcZ5&quot;</code>. By simlating the bitwise operations , we found out the first part of the function is basically a encoder that converts char string into a custom base64 code. Instead of using normal base64 sequence, it uses <code>8aZ{E$+rT yU}1#2(IOP&lt;qs,DFg.)H*Jk~L6M7]W;X%VxB:N!^-03/9[4&amp;5|&quot;?Kz</code> as its character table. A simple illustration (not real values):<br>
+<img src="img/06.PNG" alt=""></p>
+<p>However, <code>if (arguments.callee.toString().length != 1731)</code>, which means if the whole function declaration isn't the correct size, the output resets to a specific string each time. The original size of the obfuscated function is 1477, which is different from 1731. Some posts on Internet mentioned that Firefox might optimize the code before calling <code>function.toString()</code>, so we tried to use the deprecated Internet Explorer. Now that Microsoft is promoting Edge browser, we have to open the Internet Explorer using a VBS script:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Set</span> objIE = <span class="hljs-built_in">CreateObject</span>(<span class="hljs-string">"InternetExplorer.Application"</span>)
+objIE.Navigate <span class="hljs-string">"http://challenge01.root-me.org/web-client/ch15/"</span>
+objIE.Visible = <span class="hljs-number">1</span>
+</div></code></pre>
+<p>We verified the size of the function, and unfortunately it is the same result as given by Firefox. We are safe to say that the output string will be overridden if the original script is executed. We are curious to find out if it is intend or not.</p>
+<h3 id="func2">func2</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">func2</span>(<span class="hljs-params">input1, input2</span>) </span>{
+    a = <span class="hljs-string">""</span>;
+    b = <span class="hljs-string">""</span>;
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">11</span>; i++) {
+        a = input1.length ^ input2;
+        <span class="hljs-keyword">if</span> (a != <span class="hljs-string">""</span>) a = <span class="hljs-string">""</span>;
+    }
+    c = a;
+    b = c;
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; input1.length; i++) {
+        <span class="hljs-keyword">if</span> (c == <span class="hljs-string">"ESF0 ('7p(,5J')"</span>) {
+            c += <span class="hljs-built_in">String</span>[<span class="hljs-built_in">unescape</span>(<span class="hljs-string">"66%72%6f%6d%43%68%61%72%43%6f%64%65"</span>)](input2 ^ input1.charCodeAt(i) + <span class="hljs-number">12</span>);
+        } <span class="hljs-keyword">else</span> {
+            c += <span class="hljs-built_in">String</span>.fromCharCode(input2 ^ input1.charCodeAt(i));
+        }
+    }
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">arguments</span>.callee.toString().length != <span class="hljs-number">1169</span>) {
+        c = <span class="hljs-string">"ESF0 ('7p(:5J"</span>;
+    }
+    <span class="hljs-keyword">if</span> (b == <span class="hljs-string">"sfeze5825qsde8rfq--"</span>) {
+        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &gt; <span class="hljs-number">-1</span>; i++) {
+            b = <span class="hljs-string">"\x6e\x6f\x6f\x62\x20\x6e\x6f\x6f\x62"</span>;
+        }
+    }
+    <span class="hljs-keyword">return</span> c;
+}
+</div></code></pre>
+<p>At the end of <code>func1</code>, <code>func2</code> is called. The second param is either 3 or 13, and is only used in bitwize xor. The escaped string is evidently <code>&quot;fromCharCode&quot;</code>, but it missed a <code>%</code>. After deleting useless parts of the code, it is clear that <code>func2</code> take all the characters of the first argument and xor it with the second argument. The only exception is <code>if (c == &quot;ESF0 ('7p(,5J')&quot;)</code> we have to change a little bit.<br>
+However, everything seemed to be quite useless, as it checks the length of the function as well, and all it does now is to return a constant sting.</p>
+<h3 id="the-goal">The goal</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">if</span> (func2(output, <span class="hljs-number">3</span>) == func2(<span class="hljs-string">"}8iH5:}Ypi}*VL}"</span>, <span class="hljs-number">13</span>) + <span class="hljs-string">"^2d2S*,~:JLESF0 ('7p(,5J'&lt;,2prFE/W"</span>) {
+    <span class="hljs-built_in">window</span>.location.href = input + <span class="hljs-string">".php"</span>;
+}
+</div></code></pre>
+<p>Finally, if all the tests are passed, the script will redirect the page to <code>(password).php</code>. We guess that this file will give us the answer of the problem. Now the whole program make more sense: the steps to check length of function might be broken during the obfuscation process, and the whole javascript code isn't meant to be executed on the web page; Instead, we just need to find out a password that checks all the tests, and go directly to the php page. We can thus ignore those function length checks.<br>
+This is the code that is left after all simplifications:</p>
+<pre class="hljs"><code><div>func3(<span class="hljs-string">"testpassword"</span>);
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">func1</span>(<span class="hljs-params">input</span>) </span>{
+    str1 = <span class="hljs-string">'8aZ{E$+rT yU}1#2(IOP&lt;qs,DFg.)H*Jk~L6M7]W;X%VxB:N!^-03/9[4&amp;5|"?Kz'</span>;
+    str2 = <span class="hljs-built_in">escape</span>(<span class="hljs-string">"Z5ZeZ8ZxZXZmZcZ5"</span> + input + <span class="hljs-string">"eDer"</span>);
+    output = <span class="hljs-string">""</span>;
+    cnt = <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">do</span> {
+        <span class="hljs-keyword">var</span> a, b, c = <span class="hljs-string">""</span>;
+        <span class="hljs-keyword">var</span> _3, _1, _2, _0 = <span class="hljs-string">""</span>;
+        a = str2.charCodeAt(cnt++);
+        b = str2.charCodeAt(cnt++);
+        c = str2.charCodeAt(cnt++);
+        _3 = a &gt;&gt; <span class="hljs-number">2</span>;
+        _1 = ((a &amp; <span class="hljs-number">3</span>) &lt;&lt; <span class="hljs-number">4</span>) | (b &gt;&gt; <span class="hljs-number">4</span>);
+        _2 = ((b &amp; <span class="hljs-number">15</span>) &lt;&lt; <span class="hljs-number">2</span>) | (c &gt;&gt; <span class="hljs-number">6</span>);
+        _0 = c &amp; <span class="hljs-number">63</span>;
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">isNaN</span>(b)) {
+            _2 = _0 = <span class="hljs-number">64</span>;
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-built_in">isNaN</span>(c)) {
+            _0 = <span class="hljs-number">64</span>;
+        }
+        output = output + str1.charAt(_3) + str1.charAt(_1) + str1.charAt(_2) + str1.charAt(_0);
+    } <span class="hljs-keyword">while</span> (cnt &lt; str2.length);
+
+    <span class="hljs-keyword">if</span> (func2(output, <span class="hljs-number">3</span>) == func2(<span class="hljs-string">"}8iH5:}Ypi}*VL}"</span>, <span class="hljs-number">13</span>) + <span class="hljs-string">"^2d2S*,~:JLESF0 ('7p(,5J'&lt;,2prFE/W"</span>) {
+        <span class="hljs-built_in">window</span>.location.href = input + <span class="hljs-string">".php"</span>;
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"MOUHAHAHAHHAHAHAHAHA"</span>);
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">func2</span>(<span class="hljs-params">input1, input2</span>) </span>{
+    c = <span class="hljs-string">""</span>;
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; input1.length; i++) {
+        <span class="hljs-keyword">if</span> (c == <span class="hljs-string">"ESF0 ('7p(,5J')"</span>) {
+            c += <span class="hljs-built_in">String</span>.fromCharCode(input2 ^ input1.charCodeAt(i) + <span class="hljs-number">12</span>);
+        } <span class="hljs-keyword">else</span> {
+            c += <span class="hljs-built_in">String</span>.fromCharCode(input2 ^ input1.charCodeAt(i));
+        }
+    }
+    <span class="hljs-keyword">return</span> c;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">func3</span>(<span class="hljs-params">input</span>) </span>{
+    a = <span class="hljs-built_in">Array</span>(<span class="hljs-string">'%5A%58'</span>, <span class="hljs-string">'%5A%65'</span>, <span class="hljs-string">'%5A%32'</span>, <span class="hljs-string">'%5A%35'</span>, <span class="hljs-string">'%5A%72'</span>, <span class="hljs-string">'%5A%6C'</span>, <span class="hljs-string">'%5A%73'</span>, <span class="hljs-string">'%5A%76'</span>, <span class="hljs-string">'%5A%69'</span>, <span class="hljs-string">'%5A%70'</span>, <span class="hljs-string">'%5A%38'</span>, <span class="hljs-string">'%5A%77'</span>, <span class="hljs-string">'%5A%66'</span>, <span class="hljs-string">'%5A%70'</span>, <span class="hljs-string">'%5A%78'</span>, <span class="hljs-string">'%5A%6D'</span>, <span class="hljs-string">'%5A%63'</span>);
+    ans = <span class="hljs-string">''</span>;
+    c = <span class="hljs-string">''</span>;
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; input.length; i++) {
+        c = input.substr(i, <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">for</span> (j = <span class="hljs-number">0</span>; j &lt; a.length; j++) {
+            <span class="hljs-keyword">if</span> (<span class="hljs-built_in">unescape</span>(a[j].substr(<span class="hljs-number">3</span>, <span class="hljs-number">3</span>)) == c) {
+                ans += a[j];
+            }
+        }
+    }
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">unescape</span>(ans) == <span class="hljs-string">"Z5ZeZ8ZxZXZmZcZ5"</span>) {
+        func1(input);
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'fo'</span>);
+    }
+}
+</div></code></pre>
+<h2 id="calculate-the-password">Calculate the password</h2>
+<p>We start working backwards:<br>
+We have to have <code>func2(string, 3) == &quot;p5rdEr87pT}dp'[Ap^2d2S*,~:JLESF0 ('7p(,5J'&lt;,2prFE/W&quot;</code><br>
+And since xor is reversable by simply doing another xor, we calculate the string with <code>func2(&quot;p5rdEr87pT}dp'[Ap^2d2S*,~:JLESF0 ('7p(,5J'&lt;,2prFE/W&quot;, 3)</code> which gave us <code>s6qgFq;4sW~gs$XBs]1g1P)/}9IOFPE3#+$4s+/6I$?/1sqEF,T</code>. Fortunately, we never have to deal with the special case while doing the xor.</p>
+<p>Then we need to decode it back to char string. Writing a decoder similar to the encoder does the trick:</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">func1_decode</span>(<span class="hljs-params"></span>) </span>{
+    str1 = <span class="hljs-string">'8aZ{E$+rT yU}1#2(IOP&lt;qs,DFg.)H*Jk~L6M7]W;X%VxB:N!^-03/9[4&amp;5|"?Kz'</span>;
+    func1_output = <span class="hljs-string">"s6qgFq;4sW~gs$XBs]1g1P)/}9IOFPE3#+$4s+/6I$?/1sqEF,T"</span>;
+    text = <span class="hljs-string">""</span>;
+    cnt = <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">do</span> {
+        <span class="hljs-keyword">var</span> a, b, c = <span class="hljs-string">""</span>;
+        <span class="hljs-keyword">var</span> code1, code2, code3, code4 = <span class="hljs-string">""</span>;
+
+        code1 = str1.indexOf(func1_output.charAt(cnt++));
+        code2 = str1.indexOf(func1_output.charAt(cnt++));
+        code3 = str1.indexOf(func1_output.charAt(cnt++));
+        code4 = str1.indexOf(func1_output.charAt(cnt++));
+
+        a = (code1 &lt;&lt; <span class="hljs-number">2</span>) | (code2 &gt;&gt; <span class="hljs-number">4</span>);
+        b = ((code2 &amp; <span class="hljs-number">15</span>) &lt;&lt; <span class="hljs-number">4</span>) | (code3 &gt;&gt; <span class="hljs-number">2</span>);
+        c = ((code3 &amp; <span class="hljs-number">3</span>) &lt;&lt; <span class="hljs-number">6</span>) | code4;
+        text += <span class="hljs-built_in">String</span>.fromCharCode(a) + <span class="hljs-built_in">String</span>.fromCharCode(b) + <span class="hljs-built_in">String</span>.fromCharCode(c);
+    } <span class="hljs-keyword">while</span> (cnt &lt; func1_output.length);
+
+    <span class="hljs-built_in">console</span>.log(text);
+}
+</div></code></pre>
+<p>It gave us the result <code>Z5ZeZ8ZxZXZmZcZ5753dRe148axXmcD_u5eDer�</code>.<br>
+The last character is just from the edge case and is ignored. We immediately recognized the pattern, and by truncating the head and tail, this is what is left: <code>753dRe148axXmcD_u5</code><br>
+Luckily, this string checks the first test, meaning that it should be the correct password!</p>
+<h2 id="capture-the-flag">Capture the flag</h2>
+<p>Visiting http://challenge01.root-me.org/web-client/ch15/753dRe148axXmcD_u5.php gave us a blank page, but it also mean that the file is there (or there will be a 404 error). Hence, <code>753dRe148axXmcD_u5</code> must be the password and we captured the flag!<br>
+<img src="img/win.PNG" alt=""></p>
+<h2 id="counter-measures">Counter measures</h2>
+
+</body>
+</html>

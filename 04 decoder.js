@@ -16,12 +16,6 @@ function func1_decode() {
         a = (code1 << 2) | (code2 >> 4);
         b = ((code2 & 15) << 4) | (code3 >> 2);
         c = ((code3 & 3) << 6) | code4;
-
-        // if (isNaN(code2)) {
-        //     b = c = 0;
-        // } else if (isNaN(c)) {
-        //     code4 = 0;
-        // }
         text += String.fromCharCode(a) + String.fromCharCode(b) + String.fromCharCode(c);
     } while (cnt < func1_output.length);
 
