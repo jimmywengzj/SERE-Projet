@@ -368,7 +368,8 @@ code {
 <h1 id="projet-sere">Projet SERE</h1>
 <h4 id="h4224--zijing-weng-yikang-su-remy-etienne-le-tuan-khai-nguyen-mohamed-ali-lajnef">H4224 : Zijing WENG, Yikang SU, Remy ETIENNE, Le Tuan Khai NGUYEN, Mohamed-Ali LAJNEF</h4>
 <h2 id="javascript---obfuscation-5-web-clinet70-points">Javascript - Obfuscation 5 [Web-Clinet][70 Points]</h2>
-<p>The problem can be found here: https://www.root-me.org/fr/Challenges/Web-Client/Javascript-Obfuscation-5</p>
+<p>The problem can be found here: https://www.root-me.org/fr/Challenges/Web-Client/Javascript-Obfuscation-5<br>
+We have to understand a highly obfuscated Javascript code and find the password.</p>
 <h2 id="first-steps">First steps</h2>
 <p>By accessing the challenge page with firefox, we can see a single textbox and a button:<br>
 <img src="img/01.PNG" alt=""></p>
@@ -962,6 +963,10 @@ Luckily, this string checks the first test, meaning that it should be the correc
 <p>Visiting http://challenge01.root-me.org/web-client/ch15/753dRe148axXmcD_u5.php gave us a blank page, but it also mean that the file is there (or there will be a 404 error). Hence, <code>753dRe148axXmcD_u5</code> must be the password and we captured the flag!<br>
 <img src="img/win.PNG" alt=""></p>
 <h2 id="counter-measures">Counter measures</h2>
+<p>The most evident and effective counter measure for this &quot;attack&quot; is NEVER put sensitive code in the public. Verification of the password should be done on the server side, and we should use a encryption method to transfer data.<br>
+If we think about the question: Why would anyone obfuscate their code that is given to others? It may deter some attacks, but if the attacker is determined, it is always reversable. All it does is to make reverse engineering harder.<br>
+We also found out that obfuscation is commonly used in malware, to evade detection from antivirus programs, and hide vulnerabilities that it exploits.<br>
+In conclusion, do not put youself in a situation where you have to obfuscate your code, but if you have to, just make it harder.</p>
 
 </body>
 </html>

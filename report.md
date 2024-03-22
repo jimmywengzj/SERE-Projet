@@ -1,7 +1,8 @@
 # Projet SERE
 #### H4224 : Zijing WENG, Yikang SU, Remy ETIENNE, Le Tuan Khai NGUYEN, Mohamed-Ali LAJNEF
 ## Javascript - Obfuscation 5 [Web-Clinet][70 Points]
-The problem can be found here: https://www.root-me.org/fr/Challenges/Web-Client/Javascript-Obfuscation-5
+The problem can be found here: https://www.root-me.org/fr/Challenges/Web-Client/Javascript-Obfuscation-5  
+We have to understand a highly obfuscated Javascript code and find the password. 
 
 ## First steps
 By accessing the challenge page with firefox, we can see a single textbox and a button:  
@@ -631,3 +632,7 @@ Visiting http://challenge01.root-me.org/web-client/ch15/753dRe148axXmcD_u5.php g
 ![](img/win.PNG)
 
 ## Counter measures
+The most evident and effective counter measure for this "attack" is NEVER put sensitive code in the public. Verification of the password should be done on the server side, and we should use a encryption method to transfer data.  
+If we think about the question: Why would anyone obfuscate their code that is given to others? It may deter some attacks, but if the attacker is determined, it is always reversable. All it does is to make reverse engineering harder.  
+We also found out that obfuscation is commonly used in malware, to evade detection from antivirus programs, and hide vulnerabilities that it exploits.  
+In conclusion, do not put youself in a situation where you have to obfuscate your code, but if you have to, just make it harder. 
