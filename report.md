@@ -1,6 +1,6 @@
 # Projet SERE
 #### H4224 : Zijing WENG, Yikang SU, Remy ETIENNE, Le Tuan Khai NGUYEN, Mohamed-Ali LAJNEF
-## Javascript - Obfuscation 5 [Web-Clinet][70 Points]
+## Javascript - Obfuscation 5 [Web-Client][70 Points]
 The problem can be found here: https://www.root-me.org/fr/Challenges/Web-Client/Javascript-Obfuscation-5  
 We have to understand a highly obfuscated Javascript code and find the password. 
 
@@ -8,10 +8,10 @@ We have to understand a highly obfuscated Javascript code and find the password.
 By accessing the challenge page with firefox, we can see a single textbox and a button:  
 ![](img/01.PNG)
 
-After changing the text and clicking the button, the page redirect to itself with the query `?password=[Text entered]`  
+After changing the text and clicking the button, the page redirects to itself with the query `?password=[Text entered]`  
 ![](img/02.PNG)
 
-Using the build-in developper tools of the browser, we can see that there are multiple errors in the page, and several functions are not defined:  
+Using the built-in developper tools of the browser, we can see that there are multiple errors in the page, and several functions are not defined:  
 ![](img/03.PNG)
 
 We have to look into the html source code which looks like this:
@@ -55,7 +55,7 @@ We also get the hint that we have to first decode `ttt.js`
 Using the URL `http://challenge01.root-me.org/web-client/ch15/ttt.js`, we found out that it is indeed encoded into a character string:  
 ![](img/04.PNG)
 
-After a lot of research and trial and error, we stumbled upon a encoding method called JScript.Encode : 
+After extensive research and numerous trials, we stumbled upon an encoding method called JScript.Encode : 
 https://en.wikipedia.org/wiki/JScript.Encode  
 which is reverse engineered : 
 http://virtualconspiracy.com/content/articles/breaking-screnc
@@ -63,7 +63,7 @@ http://virtualconspiracy.com/content/articles/breaking-screnc
 We used Malzilla tool (available here https://malzilla.org) to decode the script.  
 ![](img/05.PNG)
 
-Now the 2 parts of javascript can be put together. But still, the script is broken : we got errors when we try to execute it
+Now the 2 parts of javascript can be put together. But still, the script is broken : we got errors when we tried to execute it
 
 ## Clean up
 The script is messed up and we need to beautify the code using https://beautifier.io  
@@ -237,7 +237,7 @@ function fgesrgesrt855456989(________________) {
 }
 ```
 
-We tried online deobfuscaters but they didn't do a lot. So we have to do it by hand: Rename function and variable names, simplify constant functions like `parseInt(constant)`, remove several useless functions, such as those who only returns the input, or those who are never called. There are also a lot of if conditions that won't trigger, and variables that are not used. After all this, the code is readable:
+We tried online deobfuscaters but they didn't do a lot. So we have to do it by hand: Renaming function and variable names, simplify constant functions like `parseInt(constant)`, remove several useless functions, such as those who only returns the input, or those who are never called. There are also a lot of if conditions that won't trigger, and variables that are not used. After all this, the code is readable:
 ```js
 globalvar = 0;
 
@@ -362,7 +362,8 @@ function func4(aaaa) {
 ```
 
 ## Dissect the code
-The easy part is done, now we have to read and understand the code to progress.
+Having completed the easier part, we now need to read and understand the code to progress.
+
 ### Some return functions
 ```js
 evalstring = '';
@@ -374,7 +375,7 @@ for (i = 0; i < 100; i++) {
 eval(evalstring);
 eval(recfn100());
 ```
-This part of code creates 100 functions that returns 0. However, these functions are never called so we can safely delete those.
+This part of code creates 100 functions that returns 0. However, since these functions are never called, we can safely delete them.
 
 ### A object in this
 ```js
@@ -389,7 +390,7 @@ var date1 = new Date();
 seconds1 = date1['getSeconds']();
 this[obj]('func4("' + login.password.value + '")', 2000);
 ```
-This part finds a object of `this` (window) and called it. By running this part of the script on firefox, we found out it is the `setTimeout` object. It means that `func4(login.password.value)` will be executed 2 seconds after the page is loaded. Even though `login` is not well defined in the html, we guess that `login.password.value` should be the text we put in the textbox.
+This part finds a object of `this` (window) and called it. By running this part of the script on firefox, we found out it is the `setTimeout` object. This means `func4(login.password.value)` will execute 2 seconds after the page loads. Even though `login` is not well defined in the html, we guess that `login.password.value` should be the text we put in the textbox.
 
 ### func4
 ```js
@@ -403,7 +404,7 @@ function func4(aaaa) {
     func3(aaaa);
 }
 ```
-All `func4` does is to calculate `globalvar` and call `func3`. Delta is always 2 (2 seconds of waiting time) and the globalvar is constant. 
+All `func4` does is calculate `globalvar` and call `func3`. Delta is always 2 (2 seconds of waiting time) and the globalvar is constant. 
 
 ### func3
 ```js
@@ -437,7 +438,7 @@ if (unescape(str3) == unescape(str2)) {
 }
 ```
 After further inspection, we found out `func3` is a check for the password: we iterate through all the character of the password, if it is one of the second character of array a, we put `'Z'+(the character)` to a output string. Then it checks if the output string equals to `"Z5ZeZ8ZxZXZmZcZ5"`, and if not, the script ends with a single alert.  
-We can deduce that for the password to pass this test, it has to have a non-continuous sub string `"5e8xXmc5"`, and the rest of the password contains no following characters `258Xcefilmprsvwx` (in ASCII order)
+We can deduce that for the password to pass this test, it must contain the non-continuous substring `"5e8xXmc5"`, and the rest of the password contains no following characters `258Xcefilmprsvwx` (in ASCII order)
 
 ### func1
 ```js
@@ -475,7 +476,7 @@ function func1(input1, input2) {
     }
 }
 ```
-At the end of `func3`, `func1` is called with the first argument the entered password and the second argument the constant string `"Z5ZeZ8ZxZXZmZcZ5"`. By simlating the bitwise operations , we found out the first part of the function is basically a encoder that converts char string into a custom base64 code. Instead of using normal base64 sequence, it uses `8aZ{E$+rT yU}1#2(IOP<qs,DFg.)H*Jk~L6M7]W;X%VxB:N!^-03/9[4&5|"?Kz` as its character table. A simple illustration (not real values):  
+At the end of `func3`, `func1` is called with the first argument the entered password and the second argument the constant string `"Z5ZeZ8ZxZXZmZcZ5"`. By simulating the bitwise operations , we found out the first part of the function is basically a encoder that converts char string into a custom base64 code. Instead of using normal base64 sequence, it uses `8aZ{E$+rT yU}1#2(IOP<qs,DFg.)H*Jk~L6M7]W;X%VxB:N!^-03/9[4&5|"?Kz` as its character table. A simple illustration (not real values):  
 ![](img/06.PNG)
 
 However, `if (arguments.callee.toString().length != 1731)`, which means if the whole function declaration isn't the correct size, the output resets to a specific string each time. The original size of the obfuscated function is 1477, which is different from 1731. Some posts on Internet mentioned that Firefox might optimize the code before calling `function.toString()`, so we tried to use the deprecated Internet Explorer. Now that Microsoft is promoting Edge browser, we have to open the Internet Explorer using a VBS script:
@@ -516,7 +517,7 @@ function func2(input1, input2) {
 }
 ```
 At the end of `func1`, `func2` is called. The second param is either 3 or 13, and is only used in bitwize xor. The escaped string is evidently `"fromCharCode"`, but it missed a `%`. After deleting useless parts of the code, it is clear that `func2` take all the characters of the first argument and xor it with the second argument. The only exception is `if (c == "ESF0 ('7p(,5J')")` we have to change a little bit.  
-However, everything seemed to be quite useless, as it checks the length of the function as well, and all it does now is to return a constant sting. 
+However, this appeared to be largely unnecessary, as it checks the length of the function as well, and all it does now is to return a constant sting. 
 
 ### The goal
 ```js
@@ -595,7 +596,7 @@ function func3(input) {
 ## Calculate the password
 We start working backwards:  
 We have to have `func2(string, 3) == "p5rdEr87pT}dp'[Ap^2d2S*,~:JLESF0 ('7p(,5J'<,2prFE/W"`  
-And since xor is reversable by simply doing another xor, we calculate the string with `func2("p5rdEr87pT}dp'[Ap^2d2S*,~:JLESF0 ('7p(,5J'<,2prFE/W", 3)` which gave us `s6qgFq;4sW~gs$XBs]1g1P)/}9IOFPE3#+$4s+/6I$?/1sqEF,T`. Fortunately, we never have to deal with the special case while doing the xor. 
+And since xor is reversible by simply doing another xor, we calculate the string with `func2("p5rdEr87pT}dp'[Ap^2d2S*,~:JLESF0 ('7p(,5J'<,2prFE/W", 3)` which gave us `s6qgFq;4sW~gs$XBs]1g1P)/}9IOFPE3#+$4s+/6I$?/1sqEF,T`. Fortunately, we never have to deal with the special case while doing the xor. 
 
 Then we need to decode it back to char string. Writing a decoder similar to the encoder does the trick:
 ```js
@@ -634,5 +635,5 @@ Visiting http://challenge01.root-me.org/web-client/ch15/753dRe148axXmcD_u5.php g
 ## Counter measures
 The most evident and effective counter measure for this "attack" is NEVER put sensitive code in the public. Verification of the password should be done on the server side, and we should use a encryption method to transfer data.  
 If we think about the question: Why would anyone obfuscate their code that is given to others? It may deter some attacks, but if the attacker is determined, it is always reversable. All it does is to make reverse engineering harder.  
-We also found out that obfuscation is commonly used in malware, to evade detection from antivirus programs, and hide vulnerabilities that it exploits.  
-In conclusion, do not put youself in a situation where you have to obfuscate your code, but if you have to, just make it harder. 
+We also found out that obfuscation is commonly used in malware, to evade detection from antivirus programs, and to hide vulnerabilities that it exploits.  
+In conclusion, avoid situations where code obfuscation is necessary, but if it's unavoidable, aim to make the process more challenging.
