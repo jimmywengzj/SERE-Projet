@@ -517,7 +517,7 @@ function func2(input1, input2) {
 }
 ```
 At the end of `func1`, `func2` is called. The second param is either 3 or 13, and is only used in bitwize xor. The escaped string is evidently `"fromCharCode"`, but it missed a `%`. After deleting useless parts of the code, it is clear that `func2` take all the characters of the first argument and xor it with the second argument. The only exception is `if (c == "ESF0 ('7p(,5J')")` we have to change a little bit.  
-However, this appeared to be largely unnecessary, as it checks the length of the function as well, and all it does now is to return a constant sting. 
+However, this appeared to be largely unnecessary, as it checks the length of the function as well, and all it does now is to return a constant string. 
 
 ### The goal
 ```js

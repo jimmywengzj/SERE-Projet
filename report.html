@@ -367,15 +367,15 @@ code {
   </script>
 <h1 id="projet-sere">Projet SERE</h1>
 <h4 id="h4224--zijing-weng-yikang-su-remy-etienne-le-tuan-khai-nguyen-mohamed-ali-lajnef">H4224 : Zijing WENG, Yikang SU, Remy ETIENNE, Le Tuan Khai NGUYEN, Mohamed-Ali LAJNEF</h4>
-<h2 id="javascript---obfuscation-5-web-clinet70-points">Javascript - Obfuscation 5 [Web-Clinet][70 Points]</h2>
+<h2 id="javascript---obfuscation-5-web-client70-points">Javascript - Obfuscation 5 [Web-Client][70 Points]</h2>
 <p>The problem can be found here: https://www.root-me.org/fr/Challenges/Web-Client/Javascript-Obfuscation-5<br>
 We have to understand a highly obfuscated Javascript code and find the password.</p>
 <h2 id="first-steps">First steps</h2>
 <p>By accessing the challenge page with firefox, we can see a single textbox and a button:<br>
 <img src="img/01.PNG" alt=""></p>
-<p>After changing the text and clicking the button, the page redirect to itself with the query <code>?password=[Text entered]</code><br>
+<p>After changing the text and clicking the button, the page redirects to itself with the query <code>?password=[Text entered]</code><br>
 <img src="img/02.PNG" alt=""></p>
-<p>Using the build-in developper tools of the browser, we can see that there are multiple errors in the page, and several functions are not defined:<br>
+<p>Using the built-in developper tools of the browser, we can see that there are multiple errors in the page, and several functions are not defined:<br>
 <img src="img/03.PNG" alt=""></p>
 <p>We have to look into the html source code which looks like this:</p>
 <pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
@@ -415,13 +415,13 @@ We also get the hint that we have to first decode <code>ttt.js</code></p>
 <h2 id="decode-tttjs">Decode ttt.js</h2>
 <p>Using the URL <code>http://challenge01.root-me.org/web-client/ch15/ttt.js</code>, we found out that it is indeed encoded into a character string:<br>
 <img src="img/04.PNG" alt=""></p>
-<p>After a lot of research and trial and error, we stumbled upon a encoding method called JScript.Encode :
+<p>After extensive research and numerous trials, we stumbled upon an encoding method called JScript.Encode :
 https://en.wikipedia.org/wiki/JScript.Encode<br>
 which is reverse engineered :
 http://virtualconspiracy.com/content/articles/breaking-screnc</p>
 <p>We used Malzilla tool (available here https://malzilla.org) to decode the script.<br>
 <img src="img/05.PNG" alt=""></p>
-<p>Now the 2 parts of javascript can be put together. But still, the script is broken : we got errors when we try to execute it</p>
+<p>Now the 2 parts of javascript can be put together. But still, the script is broken : we got errors when we tried to execute it</p>
 <h2 id="clean-up">Clean up</h2>
 <p>The script is messed up and we need to beautify the code using https://beautifier.io<br>
 The result:</p>
@@ -592,7 +592,7 @@ ____[_____](<span class="hljs-string">'_____________("'</span> + login.password.
     <span class="hljs-keyword">return</span> ________________;
 }
 </div></code></pre>
-<p>We tried online deobfuscaters but they didn't do a lot. So we have to do it by hand: Rename function and variable names, simplify constant functions like <code>parseInt(constant)</code>, remove several useless functions, such as those who only returns the input, or those who are never called. There are also a lot of if conditions that won't trigger, and variables that are not used. After all this, the code is readable:</p>
+<p>We tried online deobfuscaters but they didn't do a lot. So we have to do it by hand: Renaming function and variable names, simplify constant functions like <code>parseInt(constant)</code>, remove several useless functions, such as those who only returns the input, or those who are never called. There are also a lot of if conditions that won't trigger, and variables that are not used. After all this, the code is readable:</p>
 <pre class="hljs"><code><div>globalvar = <span class="hljs-number">0</span>;
 
 evalstring = <span class="hljs-string">''</span>;
@@ -715,7 +715,7 @@ seconds1 = date1[<span class="hljs-string">'getSeconds'</span>]();
 }
 </div></code></pre>
 <h2 id="dissect-the-code">Dissect the code</h2>
-<p>The easy part is done, now we have to read and understand the code to progress.</p>
+<p>Having completed the easier part, we now need to read and understand the code to progress.</p>
 <h3 id="some-return-functions">Some return functions</h3>
 <pre class="hljs"><code><div>evalstring = <span class="hljs-string">''</span>;
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">recfn0</span>(<span class="hljs-params"></span>)</span>{ <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;}
@@ -726,7 +726,7 @@ seconds1 = date1[<span class="hljs-string">'getSeconds'</span>]();
 <span class="hljs-built_in">eval</span>(evalstring);
 <span class="hljs-built_in">eval</span>(recfn100());
 </div></code></pre>
-<p>This part of code creates 100 functions that returns 0. However, these functions are never called so we can safely delete those.</p>
+<p>This part of code creates 100 functions that returns 0. However, since these functions are never called, we can safely delete them.</p>
 <h3 id="a-object-in-this">A object in this</h3>
 <pre class="hljs"><code><div><span class="hljs-keyword">for</span> (obj <span class="hljs-keyword">in</span> <span class="hljs-keyword">this</span>) {
     <span class="hljs-keyword">if</span> (obj.length == <span class="hljs-number">10</span>) {
@@ -739,7 +739,7 @@ seconds1 = date1[<span class="hljs-string">'getSeconds'</span>]();
 seconds1 = date1[<span class="hljs-string">'getSeconds'</span>]();
 <span class="hljs-keyword">this</span>[obj](<span class="hljs-string">'func4("'</span> + login.password.value + <span class="hljs-string">'")'</span>, <span class="hljs-number">2000</span>);
 </div></code></pre>
-<p>This part finds a object of <code>this</code> (window) and called it. By running this part of the script on firefox, we found out it is the <code>setTimeout</code> object. It means that <code>func4(login.password.value)</code> will be executed 2 seconds after the page is loaded. Even though <code>login</code> is not well defined in the html, we guess that <code>login.password.value</code> should be the text we put in the textbox.</p>
+<p>This part finds a object of <code>this</code> (window) and called it. By running this part of the script on firefox, we found out it is the <code>setTimeout</code> object. This means <code>func4(login.password.value)</code> will execute 2 seconds after the page loads. Even though <code>login</code> is not well defined in the html, we guess that <code>login.password.value</code> should be the text we put in the textbox.</p>
 <h3 id="func4">func4</h3>
 <pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">func4</span>(<span class="hljs-params">aaaa</span>) </span>{
     date2 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
@@ -751,7 +751,7 @@ seconds1 = date1[<span class="hljs-string">'getSeconds'</span>]();
     func3(aaaa);
 }
 </div></code></pre>
-<p>All <code>func4</code> does is to calculate <code>globalvar</code> and call <code>func3</code>. Delta is always 2 (2 seconds of waiting time) and the globalvar is constant.</p>
+<p>All <code>func4</code> does is calculate <code>globalvar</code> and call <code>func3</code>. Delta is always 2 (2 seconds of waiting time) and the globalvar is constant.</p>
 <h3 id="func3">func3</h3>
 <pre class="hljs"><code><div>str1 = <span class="hljs-string">'37.13R53.14R65.78R37.45R51.14R53.75R90.125R101.2365R37.145R53.789R65.123R37.745R51.258R56.348R90.368R120.125R37.785R53.78R65.1R88.842R37.11R53.785R65.78R37.82R54.46R68.13R90.82R99.193R37.73R53.769R65.71R53.46'</span>;
 splited = str1.split(<span class="hljs-string">'R'</span>);
@@ -782,7 +782,7 @@ str4 = <span class="hljs-string">''</span>;
 }
 </div></code></pre>
 <p>After further inspection, we found out <code>func3</code> is a check for the password: we iterate through all the character of the password, if it is one of the second character of array a, we put <code>'Z'+(the character)</code> to a output string. Then it checks if the output string equals to <code>&quot;Z5ZeZ8ZxZXZmZcZ5&quot;</code>, and if not, the script ends with a single alert.<br>
-We can deduce that for the password to pass this test, it has to have a non-continuous sub string <code>&quot;5e8xXmc5&quot;</code>, and the rest of the password contains no following characters <code>258Xcefilmprsvwx</code> (in ASCII order)</p>
+We can deduce that for the password to pass this test, it must contain the non-continuous substring <code>&quot;5e8xXmc5&quot;</code>, and the rest of the password contains no following characters <code>258Xcefilmprsvwx</code> (in ASCII order)</p>
 <h3 id="func1">func1</h3>
 <pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">func1</span>(<span class="hljs-params">input1, input2</span>) </span>{
     str1 = <span class="hljs-string">'8aZ{E$+rT yU}1#2(IOP&lt;qs,DFg.)H*Jk~L6M7]W;X%VxB:N!^-03/9[4&amp;5|"?Kz'</span>;
@@ -818,7 +818,7 @@ We can deduce that for the password to pass this test, it has to have a non-cont
     }
 }
 </div></code></pre>
-<p>At the end of <code>func3</code>, <code>func1</code> is called with the first argument the entered password and the second argument the constant string <code>&quot;Z5ZeZ8ZxZXZmZcZ5&quot;</code>. By simlating the bitwise operations , we found out the first part of the function is basically a encoder that converts char string into a custom base64 code. Instead of using normal base64 sequence, it uses <code>8aZ{E$+rT yU}1#2(IOP&lt;qs,DFg.)H*Jk~L6M7]W;X%VxB:N!^-03/9[4&amp;5|&quot;?Kz</code> as its character table. A simple illustration (not real values):<br>
+<p>At the end of <code>func3</code>, <code>func1</code> is called with the first argument the entered password and the second argument the constant string <code>&quot;Z5ZeZ8ZxZXZmZcZ5&quot;</code>. By simulating the bitwise operations , we found out the first part of the function is basically a encoder that converts char string into a custom base64 code. Instead of using normal base64 sequence, it uses <code>8aZ{E$+rT yU}1#2(IOP&lt;qs,DFg.)H*Jk~L6M7]W;X%VxB:N!^-03/9[4&amp;5|&quot;?Kz</code> as its character table. A simple illustration (not real values):<br>
 <img src="img/06.PNG" alt=""></p>
 <p>However, <code>if (arguments.callee.toString().length != 1731)</code>, which means if the whole function declaration isn't the correct size, the output resets to a specific string each time. The original size of the obfuscated function is 1477, which is different from 1731. Some posts on Internet mentioned that Firefox might optimize the code before calling <code>function.toString()</code>, so we tried to use the deprecated Internet Explorer. Now that Microsoft is promoting Edge browser, we have to open the Internet Explorer using a VBS script:</p>
 <pre class="hljs"><code><div><span class="hljs-keyword">Set</span> objIE = <span class="hljs-built_in">CreateObject</span>(<span class="hljs-string">"InternetExplorer.Application"</span>)
@@ -855,7 +855,7 @@ objIE.Visible = <span class="hljs-number">1</span>
 }
 </div></code></pre>
 <p>At the end of <code>func1</code>, <code>func2</code> is called. The second param is either 3 or 13, and is only used in bitwize xor. The escaped string is evidently <code>&quot;fromCharCode&quot;</code>, but it missed a <code>%</code>. After deleting useless parts of the code, it is clear that <code>func2</code> take all the characters of the first argument and xor it with the second argument. The only exception is <code>if (c == &quot;ESF0 ('7p(,5J')&quot;)</code> we have to change a little bit.<br>
-However, everything seemed to be quite useless, as it checks the length of the function as well, and all it does now is to return a constant sting.</p>
+However, this appeared to be largely unnecessary, as it checks the length of the function as well, and all it does now is to return a constant sting.</p>
 <h3 id="the-goal">The goal</h3>
 <pre class="hljs"><code><div><span class="hljs-keyword">if</span> (func2(output, <span class="hljs-number">3</span>) == func2(<span class="hljs-string">"}8iH5:}Ypi}*VL}"</span>, <span class="hljs-number">13</span>) + <span class="hljs-string">"^2d2S*,~:JLESF0 ('7p(,5J'&lt;,2prFE/W"</span>) {
     <span class="hljs-built_in">window</span>.location.href = input + <span class="hljs-string">".php"</span>;
@@ -930,7 +930,7 @@ This is the code that is left after all simplifications:</p>
 <h2 id="calculate-the-password">Calculate the password</h2>
 <p>We start working backwards:<br>
 We have to have <code>func2(string, 3) == &quot;p5rdEr87pT}dp'[Ap^2d2S*,~:JLESF0 ('7p(,5J'&lt;,2prFE/W&quot;</code><br>
-And since xor is reversable by simply doing another xor, we calculate the string with <code>func2(&quot;p5rdEr87pT}dp'[Ap^2d2S*,~:JLESF0 ('7p(,5J'&lt;,2prFE/W&quot;, 3)</code> which gave us <code>s6qgFq;4sW~gs$XBs]1g1P)/}9IOFPE3#+$4s+/6I$?/1sqEF,T</code>. Fortunately, we never have to deal with the special case while doing the xor.</p>
+And since xor is reversible by simply doing another xor, we calculate the string with <code>func2(&quot;p5rdEr87pT}dp'[Ap^2d2S*,~:JLESF0 ('7p(,5J'&lt;,2prFE/W&quot;, 3)</code> which gave us <code>s6qgFq;4sW~gs$XBs]1g1P)/}9IOFPE3#+$4s+/6I$?/1sqEF,T</code>. Fortunately, we never have to deal with the special case while doing the xor.</p>
 <p>Then we need to decode it back to char string. Writing a decoder similar to the encoder does the trick:</p>
 <pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">func1_decode</span>(<span class="hljs-params"></span>) </span>{
     str1 = <span class="hljs-string">'8aZ{E$+rT yU}1#2(IOP&lt;qs,DFg.)H*Jk~L6M7]W;X%VxB:N!^-03/9[4&amp;5|"?Kz'</span>;
@@ -965,8 +965,8 @@ Luckily, this string checks the first test, meaning that it should be the correc
 <h2 id="counter-measures">Counter measures</h2>
 <p>The most evident and effective counter measure for this &quot;attack&quot; is NEVER put sensitive code in the public. Verification of the password should be done on the server side, and we should use a encryption method to transfer data.<br>
 If we think about the question: Why would anyone obfuscate their code that is given to others? It may deter some attacks, but if the attacker is determined, it is always reversable. All it does is to make reverse engineering harder.<br>
-We also found out that obfuscation is commonly used in malware, to evade detection from antivirus programs, and hide vulnerabilities that it exploits.<br>
-In conclusion, do not put youself in a situation where you have to obfuscate your code, but if you have to, just make it harder.</p>
+We also found out that obfuscation is commonly used in malware, to evade detection from antivirus programs, and to hide vulnerabilities that it exploits.<br>
+In conclusion, avoid situations where code obfuscation is necessary, but if it's unavoidable, aim to make the process more challenging.</p>
 
 </body>
 </html>
